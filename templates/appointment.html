@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container pad-y">
+  <h1>Book an Appointment</h1>
+
+  {% if business.appointment_link and not business.use_internal_booking_form %}
+    <p><a class="btn" href="{{ business.appointment_link }}" target="_blank" rel="noopener">Open Booking</a></p>
+  {% else %}
+    <form method="post" class="form">
+      <label>Full Name<input type="text" name="name" required></label>
+      <label>Phone<input type="tel" name="phone" required></label>
+      <label>Email<input type="email" name="email"></label>
+      <label>Service
+        <select name="service">
+          {% for s in business.services %}
+            <option value="{{ s.name }}">{{ s.name }} ({{ s.price }})</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Preferred Time<input type="text" name="preferred_time"></label>
+      <label>Notes<textarea name="notes" rows="4"></textarea></label>
+      <button class="btn" type="submit">Send Request</button>
+    </form>
+  {% endif %}
+</section>
+{% endblock %}

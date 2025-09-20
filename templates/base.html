@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ business.seo_title or business.name }}</title>
+  <meta name="description" content="{{ business.seo_description or '' }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    :root{
+      --primary: {{ business.primary_color }};
+      --secondary: {{ business.secondary_color }};
+      --accent: {{ business.accent_color }};
+      --grad-start: {{ business.gradient_start }};
+      --grad-end: {{ business.gradient_end }};
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{{ url_for('home') }}">
+        <div class="logo-circle">{{ business.name[:2] }}</div>
+        <span class="brand-text">{{ business.name }}</span>
+      </a>
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('services') }}">Services</a>
+        <a href="{{ url_for('appointment') }}">Book</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for m in messages %}<div class="flash-item">{{ m }}</div>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>{{ business.name }}</h4>
+        <p class="muted">{{ business.description }}</p>
+        <p><strong>Address:</strong> {{ business.address }}</p>
+        <p><strong>Phone:</strong> <a href="tel:{{ business.phone|replace(' ','') }}">{{ business.phone }}</a></p>
+        <p><strong>Email:</strong> <a href="mailto:{{ business.email }}">{{ business.email }}</a></p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <ul class="hours">
+          {% for h in business.hours %}
+            <li><span>{{ h.days }}</span><span>{{ h.hours }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h4>Find Us</h4>
+        {% if business.google_maps_embed %}
+          <iframe src="{{ business.google_maps_embed }}" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        {% else %}
+          <p class="muted">Map coming soon.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="container small center">© {{ business.name }} • {{ business.domain }}</div>
+  </footer>
+</body>
+</html>

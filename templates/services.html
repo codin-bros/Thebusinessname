@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container pad-y">
+  <h1>Services</h1>
+  <div class="cards">
+    {% for s in business.services %}
+      <div class="card">
+        <div class="card-header">
+          <h3>{{ s.name }}</h3>
+          <span class="price">{{ s.price }}</span>
+        </div>
+        {% if s.desc %}<p class="muted">{{ s.desc }}</p>{% endif %}
+        <a class="btn ghost" href="{{ url_for('appointment') }}">Book</a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

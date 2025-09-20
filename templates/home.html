@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <h1>{{ business.tagline }}</h1>
+    <p>{{ business.description }}</p>
+    <a class="btn" href="{{ url_for('appointment') }}">Book Now</a>
+  </div>
+</section>
+
+<section class="container pad-y grid-2">
+  <div>
+    <h2>Why Choose {{ business.name }}?</h2>
+    <ul class="checklist">
+      <li>Walk-ins Welcome</li>
+      <li>Clean, Modern Studio</li>
+      <li>Cash & Cards Accepted</li>
+    </ul>
+  </div>
+  <div class="info-card">
+    <h3>Quick Info</h3>
+    <p><strong>Phone:</strong> <a href="tel:{{ business.phone|replace(' ','') }}">{{ business.phone }}</a></p>
+    <p><strong>Address:</strong> {{ business.address }}</p>
+    <a class="btn ghost" href="{{ url_for('services') }}">See Services</a>
+  </div>
+</section>
+{% endblock %}

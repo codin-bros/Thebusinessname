@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container pad-y">
+  <h1>Contact</h1>
+  <div class="grid-2">
+    <div>
+      <p><strong>Phone:</strong> <a href="tel:{{ business.phone|replace(' ','') }}">{{ business.phone }}</a></p>
+      <p><strong>Email:</strong> <a href="mailto:{{ business.email }}">{{ business.email }}</a></p>
+      <p><strong>Address:</strong> {{ business.address }}</p>
+      <ul class="hours">
+        {% for h in business.hours %}
+          <li><span>{{ h.days }}</span><span>{{ h.hours }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div>
+      {% if business.google_maps_embed %}
+        <iframe src="{{ business.google_maps_embed }}" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      {% else %}
+        <div class="placeholder-box">Map placeholder</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
